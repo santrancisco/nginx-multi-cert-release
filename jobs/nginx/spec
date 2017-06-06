@@ -1,5 +1,5 @@
 ---
-name: nginx
+name: adding-config
 templates:
     pre-start.erb: bin/pre-start
 
