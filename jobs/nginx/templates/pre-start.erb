@@ -22,9 +22,22 @@ echo "deleting old keys"
 p('ssl.certs').each do |cert|
 %>
 
-echo -n "<%= cert["fullchain"] %>" > /${SSL_CERT_LOCATION}/<%= cert["name"] %>.chained.crt
-echo -n "<%= cert["private_key"] %>" > /${SSL_CERT_LOCATION}/<%= cert["name"] %>.key
-echo -n "<%= cert["certificate"] %>" > /${SSL_CERT_LOCATION}/<%= cert["name"] %>.crt
-echo -n "<%= cert["conf"] %>" > /${NGINX_CONFIG_LOCATION}/<%= cert["name"] %>.conf
+## Using EOF multi line instead of "echo -n" to avoid problems with quotes
+
+cat <<- "_EOF_<%= cert["name"] %>.chained.crt.key_" > /${SSL_CERT_LOCATION}/<%= cert["name"] %>.chained.crt
+<%= cert["fullchain"] %>
+_EOF_<%= cert["name"] %>.chained.crt.key_
+
+cat <<- "_EOF_<%= cert["name"] %>.key_" > /${SSL_CERT_LOCATION}/<%= cert["name"] %>.key
+<%= cert["private_key"] %>
+_EOF_<%= cert["name"] %>.key_
+
+cat <<- "_EOF_<%= cert["name"] %>.crt_" > /${SSL_CERT_LOCATION}/<%= cert["name"] %>.crt
+<%= cert["certificate"] %>
+_EOF_<%= cert["name"] %>.crt_
+
+cat <<- "_EOF_<%= cert["name"] %>.conf_" > /${NGINX_CONFIG_LOCATION}/<%= cert["name"] %>.conf
+<%= cert["conf"] %>
+_EOF_<%= cert["name"] %>.conf_
 
 <% end %>
