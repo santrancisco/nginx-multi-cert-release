@@ -3,9 +3,6 @@
 set -e # exit immediately if a simple command exits with a non-zero status
 set -u # report the usage of uninitialized variables
 
-# Setup env vars and folders for the webapp_ctl script
-source /var/vcap/jobs/exchange-hub/helpers/ctl_setup.sh 'exchange-hub'
-
 export SSL_CERT_LOCATION=<%= p('ssl.cert_folder') %>
 export NGINX_CONFIG_LOCATION=<%= p('ssl.nginx_conf_folder') %>
 
@@ -25,7 +22,6 @@ echo "deleting old keys"
 p('ssl.certs').each do |cert|
 %>
 
-echo -n xxxx  > /${SSL_CERT_LOCATION}/"<%= cert["name"] %>".conf
 echo -n "<%= cert["fullchain"] %>" > /${SSL_CERT_LOCATION}/<%= cert["name"] %>.chained.crt
 echo -n "<%= cert["private_key"] %>" > /${SSL_CERT_LOCATION}/<%= cert["name"] %>.key
 echo -n "<%= cert["certificate"] %>" > /${SSL_CERT_LOCATION}/<%= cert["name"] %>.crt
