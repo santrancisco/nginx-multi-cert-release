@@ -2,8 +2,6 @@
 name: nginx
 templates:
     pre-start.erb: bin/pre-start
-packages:
-- nginx
 
 properties:
   ssl:
