@@ -1,0 +1,17 @@
+---
+name: nginx
+templates:
+    pre-start.erb: bin/pre-start
+packages:
+- nginx
+
+properties:
+  ssl:
+    cert_folder: /var/vcap/jobs/nginx-multiple-ssl-addon/certs/
+    nginx_conf_folder: /var/vcap/jobs/nginx-multiple-ssl-addon/vhosts/
+    certs:
+    - name: "test"
+      conf: "# Empty vhost configuration"
+      fullchain: "-----BEGIN CERTIFICATE-----...-----END CERTIFICATE-----"
+      certificate: "-----BEGIN CERTIFICATE-----...-----END CERTIFICATE-----"
+      private_key: "-----BEGIN RSA PRIVATE KEY-----...-----END RSA PRIVATE KEY-----"
