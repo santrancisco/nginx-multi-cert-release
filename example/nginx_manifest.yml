@@ -51,7 +51,7 @@ instance_groups:
                 ssl_certificate /var/vcap/jobs/tls-config/certs/dta_cornmbank_com.crt;
                 ssl_certificate_key /var/vcap/jobs/tls-config/certs/dta_cornmbank_com.key;
                 location / {
-                  proxy_pass http://internal-z-cld-gov-au-internal-apps-elb-828227269.ap-southeast-2.elb.amazonaws.com;
+                  proxy_pass http://Some_internal_loadbalancer;
                   proxy_set_header X-Real-IP $remote_addr;
                   proxy_set_header X-Forwarded-for $remote_addr;
                   proxy_set_header Host $http_host;
